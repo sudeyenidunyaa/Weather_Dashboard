@@ -1,0 +1,55 @@
+.app {
+    text-align: center;
+    padding: 20px;
+    background-color: #14151B;
+    color: white;
+    min-height: 100vh;
+  }
+  
+  
+  .search-button:hover {
+    background-color: #d4b527; 
+    color: #14151B;
+    border: 2px solid #1976D2;
+    box-shadow: 2px 2px 0px #1976D2;
+  }
+  
+  .city-display {
+    margin-top: 20px;
+  }
+  /* Search Bar Styling */
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+   
+  }
+  
+  .search-bar input {
+    padding: 10px;
+    border: none;
+    border-radius: 25px;
+    width: 300px;
+    font-size: 16px;
+    outline: none;
+    background-color:#F5F5DC;
+  }
+  
+  .search-bar button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #FFDB43; /* Teal button */
+    color: #14151B;
+    border: 2px solid #14151B;
+    border-radius: 25px;
+    box-shadow: 2px 2px 0px #14151B;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease;
+  }
+  .search-bar button:active{
+    background-color: #d4b527;
+    box-shadow: none;
+    transform: translateY(4px);
+  }
