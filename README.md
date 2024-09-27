@@ -38,9 +38,7 @@ This is a weather dashboard web application built using **React** that fetches l
 - **City Search**: Allow users to search for weather in different cities.
 - **Dark Mode**: Provide a dark mode option for the dashboard.
 
-## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 
 
