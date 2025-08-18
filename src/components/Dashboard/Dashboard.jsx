@@ -5,7 +5,7 @@ import './Dashboard.css';
 const Dashboard = ({ city }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [forecastData, setForecastData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [language, setLanguage] = useState('en');
 
@@ -15,30 +15,36 @@ const Dashboard = ({ city }) => {
       setError(null);
 
       try {
-        // 1) Current (backend)
+        
         const currentReq = axios.get('http://localhost:5000/api/weather', {
           params: { city },
         });
 
-        // 2) Forecast (backend)
+        
         const forecastPrimary = axios.get('http://localhost:5000/api/weather/forecast', {
-          params: { city, days: 5 },
+
+          
+          params: { city, days: 3 },
+
         });
 
         let currentWeather;
         let forecast;
 
-        // Current sonucu
+        
         const currentRes = await currentReq;
         currentWeather = currentRes.data;
 
-        // Forecast sonucu (primary dene, hata olursa fallback dene)
+        
         try {
           const forecastRes = await forecastPrimary;
           forecast = forecastRes.data;
         } catch (_) {
           const fallbackRes = await axios.get('http://localhost:5000/api/weather', {
-            params: { city, days: 5, forecast: true },
+
+
+            params: { city, days: 3, forecast: true },
+
           });
           forecast = fallbackRes.data;
         }
@@ -55,12 +61,12 @@ const Dashboard = ({ city }) => {
     if (city) getWeather();
   }, [city]);
 
-  // Function to handle language toggle
+  
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'tr' : 'en');
   };
 
-  // Texts for English and Turkish
+  
   const texts = {
     en: {
       currentWeather: 'Current Weather in',
@@ -88,23 +94,25 @@ const Dashboard = ({ city }) => {
     },
   };
 
-  // Weather condition translations
+  
   const weatherConditionTranslations = {
     en: {
       Sunny: 'Sunny',
       'Patchy rain nearby': 'Patchy rain nearby',
       'Moderate rain': 'Moderate rain',
       'Partly cloudy': 'Partly cloudy',
+      'Clear' : 'Clear',
     },
     tr: {
       Sunny: 'Güneşli',
       'Patchy rain nearby': 'Yakında parçalı yağmur',
       'Moderate rain': 'Orta şiddetli yağmur',
       'Partly cloudy': 'Parçalı Bulutlu',
+      'Clear': 'Açık',
     },
   };
 
-  // Function to get translated weather condition
+ 
   const translateCondition = (condition) => {
     return weatherConditionTranslations[language][condition] || condition;
   };

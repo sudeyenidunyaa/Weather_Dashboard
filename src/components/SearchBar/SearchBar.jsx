@@ -7,7 +7,9 @@ const SearchBar = ({ onSearch }) => {
   const handleSearch = () => {
     if (city.trim() !== '') {
       onSearch(city);
+
       setCity(''); // Clear input after searching
+
     }
   };
 
@@ -24,7 +26,9 @@ const SearchBar = ({ onSearch }) => {
         value={city}
         placeholder="Search city..."
         onChange={(e) => setCity(e.target.value)}
+
         onKeyDown={handleKeyDown}   // ⬅️ Enter desteği eklendi
+
         className="search-input"
       />
       <button onClick={handleSearch} className="search-button">
