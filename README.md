@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather Dashboard</title>
+</head>
+<body>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+  <h1>🌦 Weather Dashboard</h1>
+  <p>
+    A simple full-stack weather dashboard built with <b>React</b> (frontend) and 
+    <b>Node.js + Express</b> (backend). It fetches real-time weather and a 
+    <b>3-day forecast</b> from 
+    <a href="https://www.weatherapi.com/" target="_blank">WeatherAPI</a>.
+  </p>
 
-## Available Scripts
+  <h2>🚀 Features</h2>
+  <ul>
+    <li>Current weather data (temperature, condition, etc.)</li>
+    <li>3-day forecast</li>
+    <li>Backend proxy with API key protection</li>
+    <li>Environment variable support (<code>.env</code>)</li>
+    <li>CORS support</li>
+  </ul>
 
-In the project directory, you can run:
+  <h2>📂 Project Structure</h2>
+  <pre>
+root/
+├── client/        # React frontend
+├── server/        # Express backend
+│   ├── index.js
+│   └── .env       # NOT committed to GitHub
+└── README.md
+  </pre>
 
-### `npm start`
+  <h2>⚙️ Setup & Installation</h2>
+  <h3>1) Clone the repo</h3>
+  <pre>
+git clone https://github.com/&lt;your-username&gt;/&lt;your-repo&gt;.git
+cd &lt;your-repo&gt;
+  </pre>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  <h3>2) Install dependencies</h3>
+  <p><b>Backend:</b></p>
+  <pre>
+cd server
+npm install
+  </pre>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+  <p><b>Frontend:</b></p>
+  <pre>
+cd ../client
+npm install
+  </pre>
 
-### `npm test`
+  <h3>3) Environment variables</h3>
+  <p>Create a <code>.env</code> file inside the <code>server/</code> folder:</p>
+  <pre>
+WEATHER_API_KEY=your_api_key_here
+PORT=5000
+  </pre>
+  <p><b>⚠️ Note:</b> Do not commit <code>.env</code> to GitHub. It is already included in <code>.gitignore</code>.</p>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  <h3>4) Run the app</h3>
+  <p><b>Start backend:</b></p>
+  <pre>
+cd server
+npm run dev   # or: npm start
+  </pre>
 
-### `npm run build`
+  <p><b>Start frontend (in another terminal):</b></p>
+  <pre>
+cd client
+npm start
+  </pre>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  <p>Open <a href="http://localhost:3000" target="_blank">http://localhost:3000</a> in your browser.</p>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  <h2>🛡️ Security Notes</h2>
+  <ul>
+    <li>The API key is only used on the backend, never exposed to the frontend.</li>
+    <li><code>.env</code> is ignored in Git to protect sensitive data.</li>
+  </ul>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  <h2>🤝 Contributing</h2>
+  <p>Pull requests are welcome! For major changes, please open an issue first to discuss.</p>
 
-### `npm run eject`
+  <h2>📜 License</h2>
+  <p>MIT License.</p>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+</body>
+</html>
