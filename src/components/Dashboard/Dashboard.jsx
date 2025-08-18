@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchCurrentWeather, fetchForecast } from '../../api/weatherAPI';
+import axios from 'axios';
 import './Dashboard.css';
 
 const Dashboard = ({ city }) => {
@@ -7,7 +7,7 @@ const Dashboard = ({ city }) => {
   const [forecastData, setForecastData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [language, setLanguage] = useState('en'); 
+  const [language, setLanguage] = useState('en');
 
   useEffect(() => {
     const getWeather = async () => {
@@ -15,8 +15,34 @@ const Dashboard = ({ city }) => {
       setError(null);
 
       try {
-        const currentWeather = await fetchCurrentWeather(city);
-        const forecast = await fetchForecast(city);
+        // 1) Current (backend)
+        const currentReq = axios.get('http://localhost:5000/api/weather', {
+          params: { city },
+        });
+
+        // 2) Forecast (backend)
+        const forecastPrimary = axios.get('http://localhost:5000/api/weather/forecast', {
+          params: { city, days: 5 },
+        });
+
+        let currentWeather;
+        let forecast;
+
+        // Current sonucu
+        const currentRes = await currentReq;
+        currentWeather = currentRes.data;
+
+        // Forecast sonucu (primary dene, hata olursa fallback dene)
+        try {
+          const forecastRes = await forecastPrimary;
+          forecast = forecastRes.data;
+        } catch (_) {
+          const fallbackRes = await axios.get('http://localhost:5000/api/weather', {
+            params: { city, days: 5, forecast: true },
+          });
+          forecast = fallbackRes.data;
+        }
+
         setWeatherData(currentWeather);
         setForecastData(forecast);
       } catch (err) {
@@ -26,7 +52,7 @@ const Dashboard = ({ city }) => {
       }
     };
 
-    getWeather();
+    if (city) getWeather();
   }, [city]);
 
   // Function to handle language toggle
@@ -40,7 +66,7 @@ const Dashboard = ({ city }) => {
       currentWeather: 'Current Weather in',
       temp: 'Temperature',
       condition: 'Condition',
-      forecast: '5-Day Forecast',
+      forecast: '3-Day Forecast',
       wind: 'Wind Status',
       humidity: 'Humidity Level',
       uv: 'UV Index',
@@ -52,7 +78,7 @@ const Dashboard = ({ city }) => {
       currentWeather: 'Mevcut Hava Durumu',
       temp: 'Sıcaklık',
       condition: 'Durum',
-      forecast: '5 Günlük Tahmin',
+      forecast: '3 Günlük Tahmin',
       wind: 'Rüzgar Durumu',
       humidity: 'Nem Seviyesi',
       uv: 'UV İndeksi',
@@ -98,25 +124,39 @@ const Dashboard = ({ city }) => {
         <div>
           {/* Current Weather Section */}
           <div className="current-weather">
-            <h2>{texts[language].currentWeather} {weatherData.location.name}</h2>
-            <p>{texts[language].temp}: {weatherData.current.temp_c}°C</p>
-            <p>{texts[language].condition}: {translateCondition(weatherData.current.condition.text)}</p>
-            <img
-              src={weatherData.current.condition.icon}
-              alt={translateCondition(weatherData.current.condition.text)}
-            />
+            <h2>
+              {texts[language].currentWeather} {weatherData.location?.name}
+            </h2>
+            <p>
+              {texts[language].temp}: {weatherData.current?.temp_c}°C
+            </p>
+            <p>
+              {texts[language].condition}:{' '}
+              {translateCondition(weatherData.current?.condition?.text)}
+            </p>
+            {weatherData.current?.condition?.icon && (
+              <img
+                src={weatherData.current.condition.icon}
+                alt={translateCondition(weatherData.current.condition.text)}
+              />
+            )}
           </div>
 
           {/* 5-Day Forecast Section */}
           <div className="forecast">
             <h3>{texts[language].forecast}:</h3>
             <ul>
-              {forecastData.forecast.forecastday.map((day, index) => (
+              {forecastData.forecast?.forecastday?.map((day, index) => (
                 <li key={index}>
                   <p>{new Date(day.date).toLocaleDateString()}</p>
-                  <img src={day.day.condition.icon} alt={translateCondition(day.day.condition.text)} />
-                   <p>{translateCondition(day.day.condition.text)}</p>
-                  <p>{day.day.maxtemp_c}°C / {day.day.mintemp_c}°C</p>
+                  <img
+                    src={day.day.condition.icon}
+                    alt={translateCondition(day.day.condition.text)}
+                  />
+                  <p>{translateCondition(day.day.condition.text)}</p>
+                  <p>
+                    {day.day.maxtemp_c}°C / {day.day.mintemp_c}°C
+                  </p>
                 </li>
               ))}
             </ul>
@@ -126,15 +166,15 @@ const Dashboard = ({ city }) => {
           <div className="extra-details">
             <div>
               <p>{texts[language].wind}</p>
-              <p>{weatherData.current.wind_kph} km/h</p>
+              <p>{weatherData.current?.wind_kph} km/h</p>
             </div>
             <div>
               <p>{texts[language].humidity}</p>
-              <p>{weatherData.current.humidity}%</p>
+              <p>{weatherData.current?.humidity}%</p>
             </div>
             <div>
               <p>{texts[language].uv}</p>
-              <p>{weatherData.current.uv}</p>
+              <p>{weatherData.current?.uv}</p>
             </div>
           </div>
         </div>
